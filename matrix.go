@@ -30,26 +30,62 @@ func NewMatrix[T c.Numeric](vals [][]T) *Matrix[T] {
 		height: uint(height),
 	}
 
-	var i uint = 0
-	for ; i < height-1; i++ {
-		if len(vals[i]) != len(vals[i+1]) {
+	var row uint = 0
+	for ; row < height-1; row++ {
+		if len(vals[row]) != len(vals[row+1]) {
 			panic(e.ErrRowSize)
 		}
 
-		m.vals[i] = make([]T, width)
+		m.vals[row] = make([]T, width)
 
-		for j := uint(0); j < width; j++ {
-			m.vals[i][j] = vals[i][j]
+		for col := uint(0); col < width; col++ {
+			m.vals[row][col] = vals[row][col]
 		}
 	}
 
-	m.vals[i] = make([]T, width)
+	m.vals[row] = make([]T, width)
 
-	for j := uint(0); j < width; j++ {
-		m.vals[i][j] = vals[i][j]
+	for col := uint(0); col < width; col++ {
+		m.vals[row][col] = vals[row][col]
 	}
 
 	return m
+}
+
+// Get matrix shape
+func (m *Matrix[T]) Shape() (uint, uint) {
+	return m.height, m.width
+}
+
+// Get element
+func (m *Matrix[T]) Get(row, col uint) T {
+	if row >= m.height {
+		panic(e.ErrRowIndex)
+	}
+
+	if col >= m.width {
+		panic(e.ErrColIndex)
+	}
+
+	return m.vals[row][col]
+}
+
+// Get row
+func (m *Matrix[T]) GetRow(row uint) *Matrix[T] {
+	if row >= m.height {
+		panic(e.ErrRowIndex)
+	}
+
+	return NewMatrix(m.vals[row : row+1])
+}
+
+// Get column
+func (m *Matrix[T]) GetCol(col uint) *Matrix[T] {
+	result := []T{}
+
+	for row := uint(0); row < m.height; row++ {
+		result = append(result, m.vals[row][col])
+	}
 }
 
 // Corresponding matrices' elements are equal
@@ -58,9 +94,9 @@ func (m *Matrix[T]) Equal(rightMatrix *Matrix[T]) bool {
 		panic(e.ErrDimensions)
 	}
 
-	for i := uint(0); i < m.height; i++ {
-		for j := uint(0); j < m.width; j++ {
-			if m.vals[i][j] != rightMatrix.vals[i][j] {
+	for row := uint(0); row < m.height; row++ {
+		for col := uint(0); col < m.width; col++ {
+			if m.vals[row][col] != rightMatrix.vals[row][col] {
 				return false
 			}
 		}
