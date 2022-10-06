@@ -10,9 +10,9 @@ func Broadcast[T c.Numeric](to *Matrix[T], from *Matrix[T], by Operator[T]) {
 		panic(e.ErrDimensions)
 	}
 
-	for i := uint(0); i < to.height; i++ {
-		for j := uint(0); j < to.width; j++ {
-			to.vals[i][j] = by(to.vals[i][j], from.vals[i][j])
+	for row := uint(0); row < to.height; row++ {
+		for col := uint(0); col < to.width; col++ {
+			to.vals[row][col] = by(to.vals[row][col], from.vals[row][col])
 		}
 	}
 }
