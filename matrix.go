@@ -1,6 +1,11 @@
 package infinitemath
 
 import (
+	"fmt"
+	"math"
+	"reflect"
+	"strings"
+
 	c "github.com/eightlay/InfiniteMath/iternal/constraints"
 	e "github.com/eightlay/InfiniteMath/iternal/errors"
 )
@@ -81,11 +86,14 @@ func (m *Matrix[T]) GetRow(row uint) *Matrix[T] {
 
 // Get column
 func (m *Matrix[T]) GetCol(col uint) *Matrix[T] {
-	result := []T{}
+	result := make([][]T, m.height)
+	result[0] = make([]T, 1)
 
 	for row := uint(0); row < m.height; row++ {
-		result = append(result, m.vals[row][col])
+		result[row][0] = m.vals[row][col]
 	}
+
+	return NewMatrix(result)
 }
 
 // Corresponding matrices' elements are equal
@@ -115,4 +123,65 @@ func (m *Matrix[T]) Add(rightMatrix *Matrix[T]) {
 // by elements of the rightMatrix
 func (m *Matrix[T]) Mult(rightMatrix *Matrix[T]) {
 	Broadcast(m, rightMatrix, multOp[T])
+}
+
+// Convert matrix to its string represention
+func (m *Matrix[T]) String() string {
+	// Convert numbers to strings and find length of the longest one
+	strs := make([][]string, m.height)
+	maxLen := 0
+
+	for row := uint(0); row < m.height; row++ {
+		strs[row] = make([]string, m.width)
+
+		for col := uint(0); col < m.width; col++ {
+			strs[row][col] = fmt.Sprintf("%v", m.vals[row][col])
+
+			l := len(strs[row][col])
+			if l > maxLen {
+				maxLen = l
+			}
+		}
+	}
+
+	// Create string represenation of the matrix
+	result := fmt.Sprintf("Matrix[%v]{{", reflect.TypeOf((*T)(nil)).Elem().Name())
+	rowPrefix := strings.Repeat(" ", len(result))
+	offsetRow := 0
+	offsetCol := 0
+
+	for row := 0; row < int(math.Min(6, float64(m.height))); row++ {
+		if row != 0 {
+			result += ",\n" + rowPrefix
+		}
+
+		if row == 3 {
+			result += "...,\n" + rowPrefix
+			offsetRow = int(math.Max(float64(m.height)-6, 0))
+		}
+
+		result += "{"
+
+		for col := 0; col < int(math.Min(6, float64(m.width))); col++ {
+			if col == 3 {
+				result += ", ..."
+				offsetCol = int(math.Max(float64(m.width)-6, 0))
+			}
+
+			r, c := row+offsetRow, col+offsetCol
+
+			prefix := strings.Repeat(" ", maxLen-len(strs[r][c]))
+
+			if col != 0 {
+				result += ", "
+			}
+			result += prefix + strs[r][c]
+		}
+
+		result += "}"
+	}
+
+	result += "}}"
+
+	return result
 }
