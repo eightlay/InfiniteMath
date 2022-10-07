@@ -7,7 +7,7 @@ import (
 
 func Broadcast[T c.Numeric](to *Matrix[T], from *Matrix[T], by Operator[T]) {
 	if to.height != from.height || to.width != from.width {
-		panic(e.ErrDimensions)
+		panic(e.ErrBroadcastDimensions)
 	}
 
 	for row := uint(0); row < to.height; row++ {
