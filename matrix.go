@@ -113,6 +113,16 @@ func (m *Matrix[T]) Equal(rightMatrix *Matrix[T]) bool {
 	return true
 }
 
+// Add scalar to each matrix element
+func (m *Matrix[T]) AddScalar(s T) {
+	Spread(m, s, addOp[T])
+}
+
+// Multiply each mutrix element by scalar
+func (m *Matrix[T]) MultScalar(s T) {
+	Spread(m, s, multOp[T])
+}
+
 // Element-wise addition of matrix elements with
 // elements of the rightMatrix
 func (m *Matrix[T]) Add(rightMatrix *Matrix[T]) {
