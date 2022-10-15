@@ -57,6 +57,11 @@ func MatrixFromSlice[T c.Numeric](vals [][]T) *Matrix[T] {
 	return m
 }
 
+// Copy matrix
+func (m *Matrix[T]) Copy() *Matrix[T] {
+	return MatrixFromSlice(m.vals)
+}
+
 // Get matrix shape
 func (m *Matrix[T]) Shape() (uint, uint) {
 	return m.height, m.width
