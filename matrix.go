@@ -18,7 +18,7 @@ type Matrix[T c.Numeric] struct {
 }
 
 // Create new matrix from the given slice of shape NxM
-func NewMatrix[T c.Numeric](vals [][]T) *Matrix[T] {
+func MatrixFromSlice[T c.Numeric](vals [][]T) *Matrix[T] {
 	height := uint(len(vals))
 	if height == 0 {
 		panic(e.ErrNullMatrix)
@@ -81,7 +81,7 @@ func (m *Matrix[T]) GetRow(row uint) *Matrix[T] {
 		panic(e.ErrRowIndex)
 	}
 
-	return NewMatrix(m.vals[row : row+1])
+	return MatrixFromSlice(m.vals[row : row+1])
 }
 
 // Get column
@@ -93,7 +93,7 @@ func (m *Matrix[T]) GetCol(col uint) *Matrix[T] {
 		result[row][0] = m.vals[row][col]
 	}
 
-	return NewMatrix(result)
+	return MatrixFromSlice(result)
 }
 
 // Corresponding matrices' elements are equal
