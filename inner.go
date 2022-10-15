@@ -29,5 +29,5 @@ func Inner[T c.Numeric](m1, m2 *Matrix[T], valsOp, aggOp Operator[T]) *Matrix[T]
 		}
 	}
 
-	return NewMatrix(result)
+	return MatrixFromSlice(result)
 }

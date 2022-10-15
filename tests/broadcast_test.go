@@ -7,15 +7,15 @@ import (
 )
 
 func eye1Matrices() (*im.Matrix[int], *im.Matrix[int], *im.Matrix[int]) {
-	m1 := im.NewMatrix([][]int{
+	m1 := im.MatrixFromSlice([][]int{
 		{1, 0},
 		{0, 1},
 	})
-	m2 := im.NewMatrix([][]int{
+	m2 := im.MatrixFromSlice([][]int{
 		{1, 0},
 		{0, 1},
 	})
-	msum := im.NewMatrix([][]int{
+	msum := im.MatrixFromSlice([][]int{
 		{2, 0},
 		{0, 2},
 	})

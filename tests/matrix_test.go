@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreation(t *testing.T) {
-	m := im.NewMatrix([][]int{{1, 2}})
+	m := im.MatrixFromSlice([][]int{{1, 2}})
 
 	if m.Get(0, 0) != 1 || m.Get(0, 1) != 2 {
 		t.Fatal("invalid matrix creation")
@@ -15,7 +15,7 @@ func TestCreation(t *testing.T) {
 }
 
 func TestString(t *testing.T) {
-	m := im.NewMatrix([][]int{{1, 2}})
+	m := im.MatrixFromSlice([][]int{{1, 2}})
 	desired := "Matrix[int]{{{1, 2}}}"
 
 	if m.String() != desired {

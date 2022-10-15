@@ -7,11 +7,11 @@ import (
 )
 
 func TestAddScalar(t *testing.T) {
-	m := im.NewMatrix([][]int{
+	m := im.MatrixFromSlice([][]int{
 		{1, 2},
 		{3, 4},
 	})
-	r := im.NewMatrix([][]int{
+	r := im.MatrixFromSlice([][]int{
 		{2, 3},
 		{4, 5},
 	})
@@ -24,11 +24,11 @@ func TestAddScalar(t *testing.T) {
 }
 
 func TestMultScalar(t *testing.T) {
-	m := im.NewMatrix([][]int{
+	m := im.MatrixFromSlice([][]int{
 		{1, 2},
 		{3, 4},
 	})
-	r := im.NewMatrix([][]int{
+	r := im.MatrixFromSlice([][]int{
 		{2, 4},
 		{6, 8},
 	})
