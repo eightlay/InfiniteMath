@@ -62,6 +62,18 @@ func (m *Matrix[T]) Copy() *Matrix[T] {
 	return MatrixFromSlice(m.vals)
 }
 
+// Get matrix as 2D slice
+func (m *Matrix[T]) AsSlice() [][]T {
+	result := make([][]T, m.height)
+
+	for row := uint(0); row < m.height; row++ {
+		result[row] = make([]T, m.width)
+		copy(result[row], m.vals[row])
+	}
+
+	return result
+}
+
 // Get matrix shape
 func (m *Matrix[T]) Shape() (uint, uint) {
 	return m.height, m.width
