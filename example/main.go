@@ -8,11 +8,11 @@ import (
 
 func main() {
 	// Create matrix
-	m1 := im.NewMatrix([][]int{
+	m1 := im.MatrixFromSlice([][]int{
 		{1, 2},
 		{3, 4},
 	})
-	m2 := im.NewMatrix([][]int{
+	m2 := im.MatrixFromSlice([][]int{
 		{1, 0},
 		{0, 1},
 	})

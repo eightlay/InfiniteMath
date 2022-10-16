@@ -18,7 +18,7 @@ type Matrix[T c.Numeric] struct {
 }
 
 // Create new matrix from the given slice of shape NxM
-func NewMatrix[T c.Numeric](vals [][]T) *Matrix[T] {
+func MatrixFromSlice[T c.Numeric](vals [][]T) *Matrix[T] {
 	height := uint(len(vals))
 	if height == 0 {
 		panic(e.ErrNullMatrix)
@@ -57,9 +57,39 @@ func NewMatrix[T c.Numeric](vals [][]T) *Matrix[T] {
 	return m
 }
 
+// Copy matrix
+func (m *Matrix[T]) Copy() *Matrix[T] {
+	return MatrixFromSlice(m.vals)
+}
+
+// Get matrix as 2D slice
+func (m *Matrix[T]) AsSlice() [][]T {
+	result := make([][]T, m.height)
+
+	for row := uint(0); row < m.height; row++ {
+		result[row] = make([]T, m.width)
+		copy(result[row], m.vals[row])
+	}
+
+	return result
+}
+
 // Get matrix shape
 func (m *Matrix[T]) Shape() (uint, uint) {
 	return m.height, m.width
+}
+
+// Transpose matrix
+func (m *Matrix[T]) Transpose() *Matrix[T] {
+	result := ZeroMatrix[T](m.width, m.height)
+
+	for row := uint(0); row < m.height; row++ {
+		for col := uint(0); col < m.width; col++ {
+			result.vals[col][row] = m.vals[row][col]
+		}
+	}
+
+	return result
 }
 
 // Get element
@@ -76,16 +106,16 @@ func (m *Matrix[T]) Get(row, col uint) T {
 }
 
 // Get row
-func (m *Matrix[T]) GetRow(row uint) *Matrix[T] {
+func (m *Matrix[T]) Row(row uint) *Matrix[T] {
 	if row >= m.height {
 		panic(e.ErrRowIndex)
 	}
 
-	return NewMatrix(m.vals[row : row+1])
+	return MatrixFromSlice(m.vals[row : row+1])
 }
 
 // Get column
-func (m *Matrix[T]) GetCol(col uint) *Matrix[T] {
+func (m *Matrix[T]) Col(col uint) *Matrix[T] {
 	result := make([][]T, m.height)
 	result[0] = make([]T, 1)
 
@@ -93,7 +123,7 @@ func (m *Matrix[T]) GetCol(col uint) *Matrix[T] {
 		result[row][0] = m.vals[row][col]
 	}
 
-	return NewMatrix(result)
+	return MatrixFromSlice(result)
 }
 
 // Corresponding matrices' elements are equal

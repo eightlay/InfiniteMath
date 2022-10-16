@@ -4,4 +4,5 @@ import (
 	c "github.com/eightlay/InfiniteMath/iternal/constraints"
 )
 
-type Operator[T c.Numeric] func(...T) T
+// Operator over one or more matrix elements
+type Operator[Ti c.Numeric, To c.Numeric] func(...Ti) To

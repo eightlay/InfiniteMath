@@ -5,7 +5,8 @@ import (
 	e "github.com/eightlay/InfiniteMath/iternal/errors"
 )
 
-func Broadcast[T c.Numeric](to, from *Matrix[T], by Operator[T]) {
+// Broadcast the operator to pairs of corresponding elements of two matrices
+func Broadcast[T c.Numeric](to, from *Matrix[T], by Operator[T, T]) {
 	if to.height != from.height || to.width != from.width {
 		panic(e.ErrBroadcastDimensions)
 	}
