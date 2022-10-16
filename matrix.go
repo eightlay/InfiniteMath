@@ -81,7 +81,7 @@ func (m *Matrix[T]) Get(row, col uint) T {
 }
 
 // Get row
-func (m *Matrix[T]) GetRow(row uint) *Matrix[T] {
+func (m *Matrix[T]) Row(row uint) *Matrix[T] {
 	if row >= m.height {
 		panic(e.ErrRowIndex)
 	}
@@ -90,7 +90,7 @@ func (m *Matrix[T]) GetRow(row uint) *Matrix[T] {
 }
 
 // Get column
-func (m *Matrix[T]) GetCol(col uint) *Matrix[T] {
+func (m *Matrix[T]) Col(col uint) *Matrix[T] {
 	result := make([][]T, m.height)
 	result[0] = make([]T, 1)
 
