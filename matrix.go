@@ -79,6 +79,19 @@ func (m *Matrix[T]) Shape() (uint, uint) {
 	return m.height, m.width
 }
 
+// Transpose matrix
+func (m *Matrix[T]) Transpose() *Matrix[T] {
+	result := ZeroMatrix[T](m.width, m.height)
+
+	for row := uint(0); row < m.height; row++ {
+		for col := uint(0); col < m.width; col++ {
+			result.vals[col][row] = m.vals[row][col]
+		}
+	}
+
+	return result
+}
+
 // Get element
 func (m *Matrix[T]) Get(row, col uint) T {
 	if row >= m.height {
