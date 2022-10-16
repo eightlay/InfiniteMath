@@ -19,7 +19,7 @@ func TestString(t *testing.T) {
 	desired := "Matrix[int]{{{1, 2}}}"
 
 	if m.String() != desired {
-		t.Fatal("invalid matrix creation")
+		t.Fatal("invalid string convertion")
 	}
 }
 
@@ -28,7 +28,7 @@ func TestCopy(t *testing.T) {
 	mc := m.Copy()
 
 	if !m.Equal(mc) {
-		t.Fatal("invalid matrix creation")
+		t.Fatal("invalid matrix copy")
 	}
 }
 
@@ -40,7 +40,7 @@ func TestAsSlice(t *testing.T) {
 	t2 := m.Get(1, 0) == s[1][0]
 
 	if !(t1 && t2) {
-		t.Fatal("invalid matrix creation")
+		t.Fatal("invalid matrix as slice")
 	}
 }
 
@@ -50,6 +50,6 @@ func TestTranspose(t *testing.T) {
 	mt := m.Transpose()
 
 	if !mc.Equal(mt) {
-		t.Fatal("invalid matrix creation")
+		t.Fatal("invalid matrix transpose")
 	}
 }
