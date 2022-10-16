@@ -20,10 +20,7 @@ func Inner[T c.Numeric](m1, m2 *Matrix[T], valsOp, aggOp Operator[T, T]) *Matrix
 			toAgg := make([]T, m2.height)
 
 			for k := uint(0); k < m2.height; k++ {
-				k1 := m1.Get(row, k)
-				k2 := m2.Get(k, col)
-				k3 := valsOp(k1, k2)
-				toAgg[k] = k3 //valsOp(m1.Get(row, k), m2.Get(k, col))
+				toAgg[k] = valsOp(m1.Get(row, k), m2.Get(k, col))
 			}
 
 			result[row][col] = aggOp(toAgg...)
