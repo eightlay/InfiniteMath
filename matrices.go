@@ -21,10 +21,10 @@ func MatrixGenerator[T c.Numeric](height, width uint, genFunc func(height, width
 	m := &Matrix[T]{
 		vals:   make([][]T, height),
 		width:  width,
-		height: uint(height),
+		height: height,
 	}
 
-	for row := uint(0); row < height-1; row++ {
+	for row := uint(0); row < height; row++ {
 		m.vals[row] = make([]T, width)
 
 		for col := uint(0); col < width; col++ {
