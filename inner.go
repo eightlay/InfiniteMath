@@ -5,6 +5,7 @@ import (
 	e "github.com/eightlay/InfiniteMath/iternal/errors"
 )
 
+// Inner product of two matrices
 func Inner[T c.Numeric](m1, m2 *Matrix[T], valsOp, aggOp Operator[T]) *Matrix[T] {
 	if m1.width != m2.height {
 		panic(e.ErrInnerDimensions)
