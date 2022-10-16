@@ -6,7 +6,7 @@ import (
 )
 
 // Inner product of two matrices
-func Inner[T c.Numeric](m1, m2 *Matrix[T], valsOp, aggOp Operator[T]) *Matrix[T] {
+func Inner[T c.Numeric](m1, m2 *Matrix[T], valsOp, aggOp Operator[T, T]) *Matrix[T] {
 	if m1.width != m2.height {
 		panic(e.ErrInnerDimensions)
 	}

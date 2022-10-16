@@ -5,4 +5,4 @@ import (
 )
 
 // Operator over one or more matrix elements
-type Operator[T c.Numeric] func(...T) T
+type Operator[Ti c.Numeric, To c.Numeric] func(...Ti) To
