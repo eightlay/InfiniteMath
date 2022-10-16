@@ -6,6 +6,14 @@ import (
 	im "github.com/eightlay/InfiniteMath"
 )
 
+func TestMatrixFromSlice(t *testing.T) {
+	m := im.MatrixFromSlice([][]int{{1, 2}})
+
+	if m.Get(0, 0) != 1 || m.Get(0, 1) != 2 {
+		t.Fatal("invalid matrix creation")
+	}
+}
+
 func TestZeroMatrix(t *testing.T) {
 	m := im.ZeroMatrix[int](2, 2)
 

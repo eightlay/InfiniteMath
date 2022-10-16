@@ -8,6 +8,46 @@ import (
 	e "github.com/eightlay/InfiniteMath/iternal/errors"
 )
 
+// Create new matrix from the given slice of shape NxM
+func MatrixFromSlice[T c.Numeric](vals [][]T) *Matrix[T] {
+	height := uint(len(vals))
+	if height == 0 {
+		panic(e.ErrNullMatrix)
+	}
+
+	width := uint(len(vals[0]))
+	if width == 0 {
+		panic(e.ErrNullMatrix)
+	}
+
+	m := &Matrix[T]{
+		vals:   make([][]T, height),
+		width:  width,
+		height: uint(height),
+	}
+
+	var row uint = 0
+	for ; row < height-1; row++ {
+		if len(vals[row]) != len(vals[row+1]) {
+			panic(e.ErrRowSize)
+		}
+
+		m.vals[row] = make([]T, width)
+
+		for col := uint(0); col < width; col++ {
+			m.vals[row][col] = vals[row][col]
+		}
+	}
+
+	m.vals[row] = make([]T, width)
+
+	for col := uint(0); col < width; col++ {
+		m.vals[row][col] = vals[row][col]
+	}
+
+	return m
+}
+
 // Generate matrix with given dimensions and generation function
 func MatrixGenerator[T c.Numeric](height, width uint, genFunc func(height, width uint) T) *Matrix[T] {
 	if height == 0 {
