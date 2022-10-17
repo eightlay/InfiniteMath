@@ -5,12 +5,10 @@ import (
 )
 
 // Apply operator to each matrix element
-func Apply[T c.Numeric](m *Matrix[T], f func(T) T) {
-	for row := uint(0); row < m.height; row++ {
-		for col := uint(0); col < m.width; col++ {
-			m.vals[row][col] = f(m.vals[row][col])
-		}
-	}
+func Apply[T c.Numeric](m *Matrix[T], f func(T) T) *Matrix[T] {
+	result := m.Copy()
+	result.Apply(f)
+	return result
 }
 
 // Apply operator along axis

@@ -125,6 +125,14 @@ func (m *Matrix[T]) Mult(rightMatrix *Matrix[T]) {
 	Broadcast(m, rightMatrix, multOp[T])
 }
 
+func (m *Matrix[T]) Apply(f func(T) T) {
+	for row := uint(0); row < m.height; row++ {
+		for col := uint(0); col < m.width; col++ {
+			m.vals[row][col] = f(m.vals[row][col])
+		}
+	}
+}
+
 // Convert matrix to its string represention
 func (m *Matrix[T]) String() string {
 	// Convert numbers to strings and find length of the longest one
