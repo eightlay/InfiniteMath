@@ -7,15 +7,22 @@ import (
 
 // Inner product of two matrices
 func Inner[T c.Numeric](m1, m2 *Matrix[T], valsOp, aggOp Operator[T, T]) *Matrix[T] {
+	result := ZeroMatrix[T](m1.height, m2.width)
+	WriteInner(result, m1, m2, valsOp, aggOp)
+	return result
+}
+
+// TODO: Apply `by` function to `from` matrix and write result in `to` matrix
+func WriteInner[T c.Numeric](to, m1, m2 *Matrix[T], valsOp, aggOp Operator[T, T]) {
+	if to.height != m2.height || to.width != m1.width {
+		panic(e.ErrWriteInDimensions)
+	}
+
 	if m1.width != m2.height {
 		panic(e.ErrInnerDimensions)
 	}
 
-	result := make([][]T, m1.height)
-
 	for row := uint(0); row < m1.height; row++ {
-		result[row] = make([]T, m2.width)
-
 		for col := uint(0); col < m2.width; col++ {
 			toAgg := make([]T, m2.height)
 
@@ -23,9 +30,7 @@ func Inner[T c.Numeric](m1, m2 *Matrix[T], valsOp, aggOp Operator[T, T]) *Matrix
 				toAgg[k] = valsOp(m1.Get(row, k), m2.Get(k, col))
 			}
 
-			result[row][col] = aggOp(toAgg...)
+			to.vals[row][col] = aggOp(toAgg...)
 		}
 	}
-
-	return MatrixFromSlice(result)
 }
