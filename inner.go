@@ -14,7 +14,7 @@ func Inner[T c.Numeric](m1, m2 *Matrix[T], valsOp, aggOp Operator[T, T]) *Matrix
 
 // TODO: Apply `by` function to `from` matrix and write result in `to` matrix
 func WriteInner[T c.Numeric](to, m1, m2 *Matrix[T], valsOp, aggOp Operator[T, T]) {
-	if to.height != m1.height || to.width != m2.width {
+	if to.height != m2.height || to.width != m1.width {
 		panic(e.ErrWriteInDimensions)
 	}
 
