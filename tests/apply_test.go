@@ -13,10 +13,10 @@ func TestApply(t *testing.T) {
 		return v * v
 	}
 
-	im.Apply(m, f)
+	m.Apply(f)
 
 	if m.Get(0, 0) != 4 || m.Get(0, 1) != 9 {
-		t.Fatal("invalid matrix creation")
+		t.Fatal("invalid apply")
 	}
 }
 
