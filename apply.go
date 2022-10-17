@@ -2,6 +2,7 @@ package infinitemath
 
 import (
 	c "github.com/eightlay/InfiniteMath/iternal/constraints"
+	e "github.com/eightlay/InfiniteMath/iternal/errors"
 )
 
 // Apply operator to each matrix element
@@ -9,6 +10,19 @@ func Apply[T c.Numeric](m *Matrix[T], f func(T) T) *Matrix[T] {
 	result := m.Copy()
 	result.Apply(f)
 	return result
+}
+
+// Apply `by` function to `from` matrix and write result in `to` matrix
+func WriteApply[T c.Numeric](to, from *Matrix[T], by func(T) T) {
+	if to.height != from.height || to.width != from.width {
+		panic(e.ErrWriteInDimensions)
+	}
+
+	for row := uint(0); row < to.height; row++ {
+		for col := uint(0); col < to.width; col++ {
+			to.vals[row][col] = by(from.vals[row][col])
+		}
+	}
 }
 
 // Apply operator along axis
