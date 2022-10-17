@@ -20,6 +20,21 @@ func TestApply(t *testing.T) {
 	}
 }
 
+func TestWriteApply(t *testing.T) {
+	mto := im.ZeroMatrix[int](1, 1)
+	mfrom := im.FillMatrix(1, 1, 2)
+
+	f := func(v int) int {
+		return v * v
+	}
+
+	im.WriteApply(mto, mfrom, f)
+
+	if mto.Get(0, 0) != 4 {
+		t.Fatal("invalid apply")
+	}
+}
+
 func TestApplyAlongAxis(t *testing.T) {
 	m := im.MatrixFromSlice([][]int{{2, 3}, {4, 5}})
 
